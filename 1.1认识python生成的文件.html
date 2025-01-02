@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <meta name="msvalidate.01" content="38A57868CBC8F90FB6CEEC0F11CFCA2C" />
+        <meta name="google-site-verification" content="-UwBRfWTwjuPwGqQ3KnINva5qwsb6mfO1OBFouNBdfY" />
+        <title>认识python生成的文件 - CTFPython逆向入门</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">CTFPython逆向入门</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/CTFPyReBook/CTFPyReBook" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="认识python生成的文件"><a class="header" href="#认识python生成的文件">认识Python生成的文件</a></h1>
+<p>​    python虽然是解释型语言，但是在很多情况仍然需要涉及到纯文本源码以外的语言，譬如pyc，pyd……在逆向过程种，这些文件也是我们的需要逆向的部分（甚至比直接给出的py源码更重要），以下是常见的python文件类型：</p>
+<h2 id="py文件"><a class="header" href="#py文件">py文件</a></h2>
+<p>​    py格式文件，本质是文本文件，通常指的是<strong>Python源代码文件</strong>，它包含了Python程序执行的指令和代码，在这里不多赘述。</p>
+<h2 id="pyc文件"><a class="header" href="#pyc文件">pyc文件</a></h2>
+<p>​    pyc文件是常见的python逆向的点，pyc的逆向可以通过利用使用pycdc等工具，可以将pyc一比一的还原成python代码，所以逆向的难度主要在阅读python代码，在本教程中将不过多的针对此类文件 。</p>
+<p>​    <code>.pyc</code> 文件是Python源代码文件（<code>.py</code> 文件）编译后的<strong>字节码文件</strong>。（既不是直接可执行文件也不是文本文件，字节码是一种中间表示形式，可以在Python虚拟机上执行）</p>
+<img src="1.1认识python生成的文件.assets/image-20241218163214143.png" alt="image-20241218163214143" style="zoom: 50%;" />
+<p>​    当Python解释器首次导入一个模块时，它会将模块的源代码（<code>.py</code> 文件）编译成字节码，并将生成的字节码保存到 <code>.pyc</code> 文件中。执行后字节码文件通常保存在 <code>__pycache__</code> 目录下，文件名格式为 <code>module_name.cpython-xx.pyc</code>，其中 <code>xx</code> 是Python版本号。那么pyc是怎么存储其中内容的呢？这幅图应该能很好的解决师傅们疑惑</p>
+<img src="1.1认识python生成的文件.assets/image-20241218164137721.png" alt="image-20241218164137721" style="zoom:50%;" />
+<p>pyc和所有文件一样，会有一个文件头，而pyc的文件头就如上图所示</p>
+<ol>
+<li>魔数：是由一个 2 字节的整数，这个两个字节的整数在不同的 python 版本还不一样</li>
+<li>Bit Field ：这个字段的主要作用是为了将来能够实现复现编译结果，详细内容可以参考 <strong><a href="https://link.zhihu.com/?target=https%3A//peps.python.org/pep-0552/">PEP552-Deterministic pycs</a></strong> 。这个字段在 python2 和 python3 早期版本并没有（python3.5 还没有），在 python3 的后期版本这个字段才出现的。</li>
+<li>CodeObject：这里可以先等一等，我们后续会讲到</li>
+</ol>
+<blockquote>
+<p><strong>关于<code>.pyc</code> 文件的版本兼容性</strong></p>
+<p>​    还记得前面提到的魔数吗？文件是与Python版本相关的，不同版本的Python生成的字节码文件不兼容例如，Python 3.8生成的 .pyc 文件不能在Python 3.7环境中运行。</p>
+</blockquote>
+<p>看到这里估计很多师傅已经想要生成一个pyc试一试了，而生成pyc的方法也很简单，我们创建一个新的文件，然后输入下面的代码执行即可。</p>
+<pre><code class="language-python">import compileall
+compileall.compile_dir('/path/to/your/python/files')
+</code></pre>
+<h2 id="pyo文件py35之前"><a class="header" href="#pyo文件py35之前">pyo文件（py3.5）之前</a></h2>
+<p><strong>优化后的字节码文件</strong>：在Python 3.5及之前版本中，使用 <code>-O</code> 或 <code>-OO</code> 选项编译生成的优化字节码文件。</p>
+<h2 id="pyd文件重点"><a class="header" href="#pyd文件重点">pyd文件（重点）</a></h2>
+<p>Python专属动态链接库：类似于Windows平台上的DLL文件，包含预编译的Python扩展模块。其FFI是由自己规定的一套接口，而他的生成方法也相对困难一点，首先，你需要一个打包设置的setup.py文件，在代码文件夹同级目录上</p>
+<p>目录如下：</p>
+<pre><code class="language-shell">:.
+│  setup.py
+│
+└─pythonProject
+        talker.py
+</code></pre>
+<p>setup.py文件如下：</p>
+<pre><code class="language-python">from distutils.core import setup
+from Cython.Build import cythonize
+
+setup(
+    name='函数名',
+    ext_modules=cythonize("包含文件名"),
+)
+</code></pre>
+<p>在终端中输入python setup.py build_ext --inplace，会在同级代码文件夹里生成build和pyd文件，在代码中会生成c文件。如果要生成debug文件，则在后面在加上一个--debug</p>
+<p>生成后目录成为</p>
+<pre><code class="language-shell">:.
+│  setup.py
+│  talker.cp38-win_amd64.pdb #调试信息
+│  talker.cp38-win_amd64.pyd #(我们需要的文件)
+│  vc140.pdb # 调试信息
+│
+├─build
+│  └─temp.win-amd64-3.8
+│      └─Debug
+│          └─python
+│              └─ddos
+│                  └─pythonProject
+│                          talker.cp38-win_amd64.exp
+│                          talker.cp38-win_amd64.lib
+│                          talker.obj
+│
+└─pythonProject
+        talker.py
+        talker.c #py转化为对应的c代码
+</code></pre>
+<p>根据生成过程我们不难发现，python生成pyd的本质是先生成c代码，然后在进行编译，理解了这一点，pyd的逆向会简单不少</p>
+<blockquote>
+<p><strong>注意！！</strong></p>
+<p>1.python本身不支持生成pyd，需要我们安装Cython库</p>
+<pre><code class="language-shell">pip install Cython
+</code></pre>
+<p>2.在linux上运行是自带debug信息的，这一点不用担心。但是在<strong>windows上我们需要在后边加--debug才能进行debug编译</strong>，如果出现以下报错，很可能是由于<strong>没有debug symbol和binary导致</strong>的，可以参考 <a href="./%E9%99%84%E4%BB%B62%EF%BC%9Apython%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%A1%A8.html">附件2：python安装配置表</a>的安装选项</p>
+<pre><code class="language-shell">C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\bin\HostX86\x64\link.exe /nologo /INCREMENTAL:NO /LTCG /DEBUG:FULL /DLL /MANIFEST:EMBED,ID=2 /MANIFESTUAC:NO /LIBPATH:C:\VSC\python\libs /LIBPATH:C:\VSC\python\PCbuild\amd64 "/LIBPATH:C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\ATLMFC\lib\x64" "/LIBPATH:C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64" "/LIBPATH:C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64" "/LIBPATH:C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\ucrt\x64" "/LIBPATH:C:\Program Files (x86)\Windows Kits\10\\lib\10.0.22621.0\\um\x64" /EXPORT:PyInit_talker build\temp.win-amd64-3.8\Debug\python\ddos\pythonProject\talker.obj /OUT:D:\python\ddos\talker.cp38-win_amd64.pyd /IMPLIB:build\temp.win-amd64-3.8\Debug\python\ddos\pythonProject\talker.cp38-win_amd64.lib
+LINK : fatal error LNK1104: 无法打开文件“python38_d.lib”
+</code></pre>
+</blockquote>
+<h2 id="so文件"><a class="header" href="#so文件">so文件</a></h2>
+<p><strong>共享对象文件</strong>：在Unix-like系统（如Linux）上的接口，包含预编译的Python扩展模块。生成方法同pyd</p>
+<h2 id="egg-文件"><a class="header" href="#egg-文件">egg 文件🚧</a></h2>
+<p><strong>Python包分发格式</strong>：一种归档文件格式，用于分发Python包，类似于Java的JAR文件</p>
+<h2 id="whl文件"><a class="header" href="#whl文件">whl文件🚧</a></h2>
+<p><strong>Python Wheel文件</strong>：一种现代的Python包分发格式，比 <code>.egg</code> 文件更高效，支持二进制分发。</p>
+<h2 id="引用"><a class="header" href="#引用">引用</a></h2>
+<blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/617737294">深入理解 python 虚拟机：pyc 文件结构 - 知乎 (zhihu.com)</a></p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="1.0python基础.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="1.2python的魔术方法.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="1.0python基础.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="1.2python的魔术方法.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
