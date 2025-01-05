@@ -1,6 +1,7 @@
 [book]
 authors = ["dDostalker"]
-language = "en"
+language = "cn"
+description = "CTF中常见的python逆向入门教程"
 multilingual = false
 src = "src"
 title = "CTFPython逆向入门"
