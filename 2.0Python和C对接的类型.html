@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <meta name="msvalidate.01" content="38A57868CBC8F90FB6CEEC0F11CFCA2C" />
+        <meta name="google-site-verification" content="-UwBRfWTwjuPwGqQ3KnINva5qwsb6mfO1OBFouNBdfY" />
+        <title>python和C的对接类型 - CTFPython逆向入门</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="CTF中常见的python逆向入门教程">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">CTFPython逆向入门</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/CTFPyReBook/CTFPyReBook" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="python和c对接的类型"><a class="header" href="#python和c对接的类型">Python和C对接的类型</a></h1>
+<p>​    在描述python接口的时候，我们谈到了python有着一套c特定的接口，而这个接口就是XXObject，由于C的参数数量固定，无法预设变量，参数类型确定等等，导致python和C语言对接需要一定的转换，需要提供更多的信息给C，才能使C/C++程序员能够在各个级别上对Python解释器的功能进行扩展。在使用C/C++对Python进行功能扩展之前和逆向，必须首先掌握Python解释所提供的C语言接口。</p>
+<h2 id="c语言正向开发py模块声明"><a class="header" href="#c语言正向开发py模块声明">C语言正向开发py模块声明🚧</a></h2>
+<p>语言与语言之间，最难对接的莫过于类型，如果解决了类型的对接，就几乎解决了一半的问题</p>
+<h3 id="创建类型"><a class="header" href="#创建类型">创建类型</a></h3>
+<p>首先就是基础类型，他们的特点是他们的类型是同一变量一致的（在这个变量中的所有内容类型相同）</p>
+<h4 id="基础类型"><a class="header" href="#基础类型">基础类型</a></h4>
+<h5 id="整数类型"><a class="header" href="#整数类型">整数类型</a></h5>
+<pre><code class="language-python">PyObject* pInt = Py_BuildValue("i", 2003);
+assert(PyInt_Check(pInt));
+int i = PyInt_AsLong(pInt);
+Py_DECREF(pInt);
+</code></pre>
+<h5 id="浮点类型"><a class="header" href="#浮点类型">浮点类型</a></h5>
+<pre><code class="language-python">PyObject* pFloat = Py_BuildValue("f", 3.14f);
+assert(PyFloat_Check(pFloat));
+float f = PyFloat_AsDouble(pFloat);
+Py_DECREF(pFloat);
+</code></pre>
+<h5 id="字符串类型"><a class="header" href="#字符串类型">字符串类型</a></h5>
+<pre><code class="language-python">PyObject* pString = Py_BuildValue("s", "Python");
+assert(PyString_Check(pString);
+int nLen = PyString_Size(pString);
+char* s = PyString_AsString(pString);
+Py_DECREF(pString);
+</code></pre>
+<p>与他们不同的是元组和列表，他们其中的内容并不统一，类型多样，但是二者之间还是存在区别，元组不可扩展，列表可以进行扩展。</p>
+<h4 id="元组"><a class="header" href="#元组">元组</a></h4>
+<pre><code class="language-python">PyObject* pTuple = PyTuple_New(3);
+assert(PyTuple_Check(pTuple));
+assert(PyTuple_Size(pTuple) == 3);
+// 初始化元组
+PyTuple_SetItem(pTuple, 0, Py_BuildValue("i", 2003));
+PyTuple_SetItem(pTuple, 1, Py_BuildValue("f", 3.14f));
+PyTuple_SetItem(pTuple, 2, Py_BuildValue("s", "Python"));
+
+// 解析元组
+int i;
+float f;
+char *s;
+if (!PyArg_ParseTuple(pTuple, "ifs", &amp;i, &amp;f, &amp;s))
+    PyErr_SetString(PyExc_TypeError, "invalid parameter");
+// cleanup
+Py_DECREF(pTuple);
+列表
+// 创建列表
+PyObject* pList = PyList_New(3); // new reference
+assert(PyList_Check(pList));
+// pList[i] = i
+for(int i = 0; i &lt; 3; ++i)
+    PyList_SetItem(pList, i, Py_BuildValue("i", i));
+// 插入元素
+PyList_Insert(pList, 2, Py_BuildValue("s", "inserted"));
+// 追加元素
+PyList_Append(pList, Py_BuildValue("s", "appended"));
+// 排序数组
+PyList_Sort(pList);
+// 反转数组
+PyList_Reverse(pList);
+// 数组切片
+PyObject* pSlice = PyList_GetSlice(pList, 2, 4); // new reference
+for(int j = 0; j &lt; PyList_Size(pSlice); ++j) {
+  PyObject *pValue = PyList_GetItem(pList, j);
+  assert(pValue);
+}
+Py_DECREF(pSlice);
+Py_DECREF(pList);
+</code></pre>
+<p>而字典则是最不同的，因为字典是固定的String类型+任意类型构成，并且其中涉及到了迭代器的内容，这里我们先不涉及那么多内容，只是先讲一下字典</p>
+<h4 id="字典"><a class="header" href="#字典">字典</a></h4>
+<pre><code class="language-python">// 创建字典
+PyObject* pDict = PyDict_New();
+assert(PyDict_Check(pDict));
+// pDict["first"] = 2003
+PyDict_SetItemString(pDict, "first", Py_BuildValue("i", 2003));
+// pDict["second"] = 3.14
+PyDict_SetItemString(pDict, "second", Py_BuildValue("f", 3.14f));
+
+// pDicts.Keys();
+PyObject* pKeys = PyDict_Keys();
+for(int i = 0; i &lt; PyList_Size(pKeys); ++i) {
+  PyObject *pKey = PyList_GetItem(pKeys, i);
+  PyObject *pValue = PyDict_GetItem(pDict, pKey);
+  assert(pValue);
+}
+Py_DECREF(pKeys);
+// 删除pDict["second"]
+PyDict_DelItemString(pDict, "second");
+Py_DECREF(pDict);
+</code></pre>
+<h3 id="函数声明"><a class="header" href="#函数声明">函数声明🚧</a></h3>
+<h3 id="函数导出"><a class="header" href="#函数导出">函数导出🚧</a></h3>
+<h2 id="引用"><a class="header" href="#引用">引用</a></h2>
+<pre><code>
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="1.3pvm字节码.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="2.1PyTypeObject.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="1.3pvm字节码.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="2.1PyTypeObject.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
